@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/fadegor05/linkshortee/backend/services/link"
+	"github.com/fadegor05/linkshortee/backend/services"
 	"github.com/gorilla/mux"
 	"gorm.io/gorm"
 	"log"
@@ -24,7 +24,7 @@ func (s *APIServer) Run() error {
 	router := mux.NewRouter()
 	subRouter := router.PathPrefix("/api/v1").Subrouter()
 
-	linkHandler := link.NewHandler()
+	linkHandler := services.NewHandler()
 	linkHandler.Register(subRouter)
 
 	log.Println("Starting server on", s.addr)
