@@ -1,4 +1,4 @@
-package link
+package services
 
 import (
 	"github.com/gorilla/mux"
@@ -13,5 +13,5 @@ func NewHandler() *Handler {
 }
 func (h *Handler) Register(router *mux.Router) {
 	router.HandleFunc("/link", h.handleCreateLink).Methods(http.MethodPost)
-	router.HandleFunc("/link/{id}", h.handleGetLink).Methods(http.MethodGet)
+	router.HandleFunc("/{code}", h.handleGetLink).Methods(http.MethodGet)
 }
