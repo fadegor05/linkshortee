@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  backend:
+    container_name: backend-linkshortee
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    env_file:
+      - .env
+    build: ./backend
+    command:
+      - /backend
+
+  postgres:
+    container_name: postgres-linkshortee
+    restart: always
+    image: postgres:16
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
