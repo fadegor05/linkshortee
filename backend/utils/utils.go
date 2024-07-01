@@ -2,13 +2,13 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
 )
 
 func ParseJSON(r *http.Request, payload any) error {
 	if r.Body == nil {
-		return fmt.Errorf("no body provided")
+		return errors.New("empty body")
 	}
 
 	return json.NewDecoder(r.Body).Decode(payload)
