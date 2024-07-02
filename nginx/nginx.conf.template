@@ -2,6 +2,11 @@ server {
     listen 80;
 
     location / {
+        #if ($uri = /) {
+        #    proxy_pass http://frontend; # TODO
+        #    break;
+        #}
+
         rewrite ^/(.*)$ /api/v1/$1 break;
         proxy_pass http://backend:${BACKEND_PORT}/;
     }
